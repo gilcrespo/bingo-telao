@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BINGO - PARÓQUIA SANTUÁRIO NOSSA SENHORA APARECIDA</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="arquivos/imagens/favicon.png"/>
+    <link rel="stylesheet" href="arquivos/css/normalize.min.css" />
+    <link rel="stylesheet" href="arquivos/css/flexslider.css" />
+    <link rel="stylesheet" href="arquivos/css/estilo.css" />
+    <script src="arquivos/javascript/jquery.min.js"></script>
+    <script src="arquivos/javascript/jquery.flexslider-min.js"></script>
+    <script>
+        $(function() {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                controlNav: false,
+                keyboard: false,
+                directionNav: false,
+                slideshowSpeed: 7000
+            });
+
+            $('.cinza').click(function(){
+                clique($(this));
+            });
+
+            $('h2').click(function(){
+                novarodada();
+            });
+            
+            novarodada();
+
+            function novarodada() {
+                var rdd = prompt("Digite o número da rodada", "");
+                if (rdd != null) {
+                    $('h2').text("Rodada " + rdd);
+                }
+    
+                $('#numeros td').removeClass().addClass('cinza');
+                $('#banner #propaganda').hide();
+                $('#banner .flexslider').show();
+                trocabola_maior('ultima',0);
+                trocabola_menor('penultima',0);
+            
+                if (isNaN(rdd)) {
+                    $('h2').text(rdd);
+                    $('#bolas').addClass('especial');
+                } else {
+                    $('#bolas').removeClass('especial');
+                }
+            }
+            
+        });
+
+        function clique(num){
+            if(num.hasClass('ultimo')){
+                penultimo = $('#numeros').find('.penultimo');
+                var resp = confirm("Confirma desclicar número "+ num.text() +"?");
+                if (resp == true) {
+                    num.removeClass().addClass('cinza');
+                    trocabola_menor('penultima',0);
+                    trocabola_maior(penultimo.text());
+                    penultimo.addClass('ultimo');
+                }
+            } else {
+                num.removeClass('cinza');
+                var penultimo = $('#numeros').find('.penultimo');
+                var ultimo = $('#numeros').find('.ultimo');
+                penultimo.removeClass('penultimo');
+                ultimo.addClass('sorteado penultimo').removeClass('ultimo');
+                num.addClass('ultimo');
+                trocabola_maior(num.text());
+                if (ultimo.text()!="") {
+                    trocabola_menor(ultimo.text());
+                }
+                $('#banner .flexslider').hide();
+                $('#banner #propaganda').attr('src','patrocinadores/'+ num.text() +'.jpg').show();
+            }
+        }
+        function trocacor(onde,num){
+            $('#'+onde+'-bola').removeClass();
+            if (num>0 && num<=15) {
+                $('#'+onde+'-bola').addClass('vermelho')
+                $('#'+onde+'-bola strong').text('A');
+            } else if (num>15 && num<=30) {
+                $('#'+onde+'-bola').addClass('amarelo')
+                $('#'+onde+'-bola strong').text('J');
+            } else if (num>30 && num<=45) {
+                $('#'+onde+'-bola').addClass('verde')
+                $('#'+onde+'-bola strong').text('U');
+            } else if (num>45 && num<=60) {
+                $('#'+onde+'-bola').addClass('azul')
+                $('#'+onde+'-bola strong').text('D');
+            } else if (num>60 && num<=75) {
+                $('#'+onde+'-bola').addClass('roxo')
+                $('#'+onde+'-bola strong').text('E');
+            } else {
+                $('#'+onde+'-bola strong').text('-');
+                $('#'+onde+'-bola span').text('-');
+            }
+        }
+        function trocabola_maior(num){
+            $('#ultima-bola span').text(num);
+            trocacor('ultima',num);
+        }
+        function trocabola_menor(num){
+            $('#penultima-bola span').text(num);
+            trocacor('penultima',num);
+        }
+    </script>
+</head>
+<body>
+    <div id="logo">
+        <img src="logo.png" alt="Paróquia Santuário Nossa Senhora Aparecida">
+    </div>
+    <div id="numeros">
+        <!-- A -->
+        <table id="vermelho">
+            <tr><th colspan="2">A</th></tr>
+            <tr><td class="cinza">1</td><td class="cinza">9</td></tr>
+            <tr><td class="cinza">2</td><td class="cinza">10</td></tr>
+            <tr><td class="cinza">3</td><td class="cinza">11</td></tr>
+            <tr><td class="cinza">4</td><td class="cinza">12</td></tr>
+            <tr><td class="cinza">5</td><td class="cinza">13</td></tr>
+            <tr><td class="cinza">6</td><td class="cinza">14</td></tr>
+            <tr><td class="cinza">7</td><td class="cinza">15</td></tr>
+            <tr><td class="cinza">8</td></tr>
+        </table>
+        <!-- J -->
+        <table id="amarelo">
+            <tr><th colspan="2">J</th></tr>
+            <tr><td class="cinza">16</td><td class="cinza">24</td></tr>
+            <tr><td class="cinza">17</td><td class="cinza">25</td></tr>
+            <tr><td class="cinza">18</td><td class="cinza">26</td></tr>
+            <tr><td class="cinza">19</td><td class="cinza">27</td></tr>
+            <tr><td class="cinza">20</td><td class="cinza">28</td></tr>
+            <tr><td class="cinza">21</td><td class="cinza">29</td></tr>
+            <tr><td class="cinza">22</td><td class="cinza">30</td></tr>
+            <tr><td class="cinza">23</td></tr>
+        </table>
+        <!-- U -->
+        <table id="verde">
+            <tr><th colspan="2">U</th></tr>
+            <tr><td class="cinza">31</td><td class="cinza">39</td></tr>
+            <tr><td class="cinza">32</td><td class="cinza">40</td></tr>
+            <tr><td class="cinza">33</td><td class="cinza">41</td></tr>
+            <tr><td class="cinza">34</td><td class="cinza">42</td></tr>
+            <tr><td class="cinza">35</td><td class="cinza">43</td></tr>
+            <tr><td class="cinza">36</td><td class="cinza">44</td></tr>
+            <tr><td class="cinza">37</td><td class="cinza">45</td></tr>
+            <tr><td class="cinza">38</td></tr>
+        </table>
+        <!-- D -->
+        <table id="azul">
+            <tr><th colspan="2">D</th></tr>
+            <tr><td class="cinza">46</td><td class="cinza">54</td></tr>
+            <tr><td class="cinza">47</td><td class="cinza">55</td></tr>
+            <tr><td class="cinza">48</td><td class="cinza">56</td></tr>
+            <tr><td class="cinza">49</td><td class="cinza">57</td></tr>
+            <tr><td class="cinza">50</td><td class="cinza">58</td></tr>
+            <tr><td class="cinza">51</td><td class="cinza">59</td></tr>
+            <tr><td class="cinza">52</td><td class="cinza">60</td></tr>
+            <tr><td class="cinza">53</td></tr>
+        </table>
+        <!-- E -->
+        <table id="roxo">
+            <tr><th colspan="2">E</th></tr>
+            <tr><td class="cinza">61</td><td class="cinza">69</td></tr>
+            <tr><td class="cinza">62</td><td class="cinza">70</td></tr>
+            <tr><td class="cinza">63</td><td class="cinza">71</td></tr>
+            <tr><td class="cinza">64</td><td class="cinza">72</td></tr>
+            <tr><td class="cinza">65</td><td class="cinza">73</td></tr>
+            <tr><td class="cinza">66</td><td class="cinza">74</td></tr>
+            <tr><td class="cinza">67</td><td class="cinza">75</td></tr>
+            <tr><td class="cinza">68</td></tr>
+        </table>
+        <div id="banner">
+            <img id="propaganda" src="" />
+            <div class="flexslider">
+              <ul class="slides">
+                <li><img src="fotos/foto1.jpg" /></li>
+                <li><img src="fotos/foto2.jpg" /></li>
+                <li><img src="fotos/foto3.jpg" /></li>
+                <li><img src="fotos/foto4.jpg" /></li>
+                <li><img src="fotos/foto5.jpg" /></li>
+              </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="bolas">
+        <h2>&nbsp;</h2>
+        <p id="ultima-bola">
+            <strong>-</strong>
+            <span>-</span>
+        </p>
+        <p id="penultima-bola">
+            <strong>-</strong>
+            <span>-</span>
+        </p>
+    </div>
+</body>
+</html>
